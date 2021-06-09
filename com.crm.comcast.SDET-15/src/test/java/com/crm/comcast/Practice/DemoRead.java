@@ -2,6 +2,7 @@ package com.crm.comcast.Practice;
 
 import org.testng.annotations.Test;
 
+import com.crm.comcast.GenericUtils.DatabaseUtility;
 import com.crm.comcast.GenericUtils.JSONFileUtility;
 import com.crm.comcast.GenericUtils.PropertyFileUtility;
 import com.crm.comcast.GenericUtils.XMLFileUtility;
@@ -17,6 +18,8 @@ public class DemoRead {
 		
 		XMLFileUtility xmlLib = new XMLFileUtility();
 		
+		DatabaseUtility dbLib = new DatabaseUtility();
+		
 		String USERNAME = pLib.readDataFromPropertyFile("username");
 		System.out.println(USERNAME);
 		
@@ -26,6 +29,10 @@ public class DemoRead {
 		String PASSWORD = xmlLib.readDataFromXml("password");
 		System.out.println(PASSWORD);
 		
+	    dbLib.connectToDB();
+	    String value = dbLib.executeQueryAndGetData("select * from employee;", 1, "chaitra");
+		System.out.println(value);
+		dbLib.closeDB();
 	}
 
 }

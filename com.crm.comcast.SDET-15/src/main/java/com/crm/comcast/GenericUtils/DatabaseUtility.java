@@ -1,6 +1,7 @@
 package com.crm.comcast.GenericUtils;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,72 +11,87 @@ import org.testng.annotations.Test;
 
 import com.mysql.cj.jdbc.Driver;
 
+/**
+ * this class contains methods related to database
+ * @author Chaitra
+ *
+ */
+
 public class DatabaseUtility {
 	
-	@Test
-	public void databaseExecuteQuery() throws Throwable
-	{
-		//Step 1: Register to database
-	    Driver driverRef = new Driver();
-	    DriverManager.registerDriver(driverRef);
-	    
-	    //Step 2: get connection with database- provide database name
-	    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sdet", "root", "root");
-	    
-	    //Step 3: issue create statement
-	    Statement stat = conn.createStatement();
-	    
-	    //Step 4: Execute any query - provide table name
-	    ResultSet result = stat.executeQuery("select * from employee;");
-	    while(result.next())
-	    {
-	    	System.out.println(result.getString(1)+"\t"+result.getString(2)+"\t"+result.getString(3));
-	    }
-	    
-	    //Step 5: close the database
-	    conn.close();
-	    
-	}
+	Connection con=null;
+	ResultSet result = null;
 	
-	@Test
-	public void databaseExecuteUpdate() throws Throwable
+	/**
+	 * this method will establish connection with database
+	 * @throws SQLException 
+	 */
+	public void connectToDB() throws SQLException
 	{
-		Connection conn=null;
+		Driver driverRef;
 		try
 		{
-		//Step 1: Register to database
-	    Driver driverRef = new Driver();
-	    DriverManager.registerDriver(driverRef);
-	    
-	    //Step 2: get connection with database- provide database name
-	     conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sdet", "root", "root");
-	    
-	    //Step 3: issue create statement
-	    Statement stat = conn.createStatement();
-	  
-	    //Step 4: Execute any query - provide table name
-	    int result = stat.executeUpdate("insert into employee values('Rajat',1258964,'Delhi');");//execution stopped
-	    if(result == 1)
-	    {
-	    	System.out.println("query successfull- 1 row added");
-	    }
-	    else
-	    {
-	    	System.out.println("query failed");
-	    }
+		driverRef = new Driver();
+		DriverManager.registerDriver(driverRef);
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sdet", "root", "root");
 		}
-		catch(Exception e)
-		{
-			
+		catch(Exception e) {
+			e.printStackTrace();
 		}
-	    
-	    //Step 5: close the database
-		finally {
-			conn.close();
-			System.out.println("database connection closed successfully");
-		}
-	    
-	    
 	}
+	
+	/**
+	 * This method will close database connection
+	 * @throws SQLException 
+	 */
+	public void closeDB() throws SQLException
+	{
+		con.close();
+	}
+	
+	/**
+	 * This method helps to verify data in database
+	 * @param query
+	 * @param columnName
+	 * @param expData
+	 * @return
+	 * @throws SQLException
+	 */
+	public String executeQueryAndGetData(String query, int columnName, String expData) throws SQLException
+	{
+		boolean flag = false;
+		result = con.createStatement().executeQuery(query);
+		while(result.next())
+		{
+			if(result.getString(columnName).equalsIgnoreCase(expData))
+			{
+				flag=true;
+				break;
+			}
+		}
+		if(flag)
+		{
+			System.out.println(expData + "data verfied in database");
+			return expData;
+		}
+		else
+		{
+			System.out.println(expData + "data not verfied");
+			return expData;
+		}
+	}
+	
+	public ResultSet readDataFromDatabase()
+	{
+		//step1
+		//step2
+		//step3
+		//step4
+		return result;
+	}
+	
+	
+	
+	
 	
 }

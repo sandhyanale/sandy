@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.crm.comcast.GenericUtils.DatabaseUtility">
+      <class name="com.crm.comcast.Practice.DemoDebug">
         <methods>
-          <include name="databaseExecuteUpdate"/>
+          <include name="sampleDebug"/>
         </methods>
-      </class> <!-- com.crm.comcast.GenericUtils.DatabaseUtility -->
+      </class> <!-- com.crm.comcast.Practice.DemoDebug -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

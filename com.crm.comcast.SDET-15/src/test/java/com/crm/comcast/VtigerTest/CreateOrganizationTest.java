@@ -1,4 +1,4 @@
-package com.crm.comcast.Practice;
+package com.crm.comcast.VtigerTest;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +16,7 @@ import com.crm.comcast.GenericUtils.PropertyFileUtility;
 public class CreateOrganizationTest {
 	
 	@Test
-	public void createOrganization() throws Throwable
+	public void createOrgTest() throws Throwable
 	{
 		WebDriver driver;
 		PropertyFileUtility pLib = new PropertyFileUtility();
@@ -48,7 +48,6 @@ public class CreateOrganizationTest {
 	    driver.findElement(By.id("submitButton")).click();
 	    
 	    //navigate to organizations
-	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	    driver.findElement(By.linkText("Organizations")).click();
 	    
 	    //navigate to create organization
@@ -63,4 +62,5 @@ public class CreateOrganizationTest {
         Assert.assertTrue(successMsg.contains("SkillRary"));
         System.out.println(successMsg);
 	}
+
 }
