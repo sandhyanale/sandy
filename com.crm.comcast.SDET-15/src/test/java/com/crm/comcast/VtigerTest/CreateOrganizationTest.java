@@ -10,6 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.Test;
 
+import com.crm.comcast.GenericUtils.ExcelUtility;
 import com.crm.comcast.GenericUtils.JavaUtility;
 import com.crm.comcast.GenericUtils.PropertyFileUtility;
 import com.crm.comcast.GenericUtils.WebDriverUtility;
@@ -23,8 +24,9 @@ public class CreateOrganizationTest {
 		PropertyFileUtility pLib = new PropertyFileUtility();
 		JavaUtility jLib = new JavaUtility();
 		WebDriverUtility wLib = new WebDriverUtility();
+		ExcelUtility eLib = new ExcelUtility();
 		
-		int random = jLib.getRandomNumber();
+		String OrgName = eLib.getExcelData("sheet1","TC_01","OrgName")+jLib.getRandomNumber();
 		String URL = pLib.readDataFromPropertyFile("url");
 	    String USERNAME = pLib.readDataFromPropertyFile("username");
 	    String PASSWORD = pLib.readDataFromPropertyFile("password");
@@ -56,12 +58,12 @@ public class CreateOrganizationTest {
 	    driver.findElement(By.xpath("//img[@title='Create Organization...']")).click();
 	    
 	    //enter mandatory fields and create organization
-	    driver.findElement(By.name("accountname")).sendKeys("SkillRary_"+random);
+	    driver.findElement(By.name("accountname")).sendKeys(OrgName);
 	    driver.findElement(By.xpath("//input[@title='Save [Alt+S]']")).click();
 	    
 	    //validate
         String successMsg = driver.findElement(By.xpath("//span[@class='dvHeaderText']")).getText();
-        Assert.assertTrue(successMsg.contains("SkillRary"));
+        Assert.assertTrue(successMsg.contains(OrgName));
         System.out.println(successMsg);
 	}
 
