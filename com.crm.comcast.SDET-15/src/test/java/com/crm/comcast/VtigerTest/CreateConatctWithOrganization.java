@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 
 import com.crm.comcast.GenericUtils.JavaUtility;
 import com.crm.comcast.GenericUtils.PropertyFileUtility;
+import com.crm.comcast.GenericUtils.WebDriverUtility;
 
 public class CreateConatctWithOrganization {
 	
@@ -22,6 +23,7 @@ public class CreateConatctWithOrganization {
 		WebDriver driver;
 		PropertyFileUtility pLib = new PropertyFileUtility();
 		JavaUtility jLib = new JavaUtility();
+		WebDriverUtility wLib = new WebDriverUtility();
 		
 		int random = jLib.getRandomNumber();
 		String URL = pLib.readDataFromPropertyFile("url");
@@ -38,10 +40,16 @@ public class CreateConatctWithOrganization {
 	    	driver = new InternetExplorerDriver();
 	    }
 	    
+	    
 	    //navigate to the url
-	    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+	    wLib.waitForPageToLoad(driver);
 	    driver.get(URL);
-	    driver.manage().window().maximize();
+	    wLib.maximiseWin(driver);
+	    
+	    //login to the application
+	    driver.findElement(By.name("user_name")).sendKeys(USERNAME);
+	    driver.findElement(By.name("user_password")).sendKeys(PASSWORD);
+	    driver.findElement(By.id("submitButton")).click();
 	    
 	    //navigate to organization
 	    driver.findElement(By.linkText("Contacts")).click();
@@ -50,20 +58,17 @@ public class CreateConatctWithOrganization {
 		driver.findElement(By.xpath("//img[@title='Create Contact...']")).click();
 		driver.findElement(By.name("lastname")).sendKeys("chaitra");
 		driver.findElement(By.xpath("//input[@name='account_name']/following-sibling::img[@alt='Select']")).click();
-		//wUtil.switchToWindow(driver, "Accounts");
 		
-		Set<String> window = driver.getWindowHandles();
-		   Iterator<String> it = window.iterator();
-		   while(it.hasNext())
-		   {
-			   String winId = it.next();
-		       driver.switchTo().window(winId);
-		   }
-		   
-		driver.findElement(By.id("search_txt")).sendKeys("SkillRary_"+random);
+		//switch to child window
+		wLib.switchToWindow(driver, "Accounts");
+		driver.findElement(By.id("search_txt")).sendKeys("TYSS32");
 		driver.findElement(By.name("search")).click();
-		driver.findElement(By.linkText("SkillRary_"+random)).click();
-		//wUtil.switchToWindow(driver, "Contacts");
+		driver.findElement(By.linkText("TYSS32")).click();
+		
+		//switch the control back to parent
+		wLib.switchToWindow(driver, "Contacts");
+		
+		//save
 		driver.findElement(By.xpath("//input[@title='Save [Alt+S]']")).click();
 	}
 

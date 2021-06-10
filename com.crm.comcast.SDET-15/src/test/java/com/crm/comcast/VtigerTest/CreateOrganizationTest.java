@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 import com.crm.comcast.GenericUtils.JavaUtility;
 import com.crm.comcast.GenericUtils.PropertyFileUtility;
+import com.crm.comcast.GenericUtils.WebDriverUtility;
 
 public class CreateOrganizationTest {
 	
@@ -21,6 +22,7 @@ public class CreateOrganizationTest {
 		WebDriver driver;
 		PropertyFileUtility pLib = new PropertyFileUtility();
 		JavaUtility jLib = new JavaUtility();
+		WebDriverUtility wLib = new WebDriverUtility();
 		
 		int random = jLib.getRandomNumber();
 		String URL = pLib.readDataFromPropertyFile("url");
@@ -38,9 +40,9 @@ public class CreateOrganizationTest {
 	    }
 	    
 	    //navigate to the url
-	    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+	    wLib.waitForPageToLoad(driver);
 	    driver.get(URL);
-	    driver.manage().window().maximize();
+	    wLib.maximiseWin(driver);
 	    
 	    //login to the application
 	    driver.findElement(By.name("user_name")).sendKeys(USERNAME);

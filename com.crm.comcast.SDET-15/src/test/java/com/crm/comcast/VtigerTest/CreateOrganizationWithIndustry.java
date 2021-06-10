@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 
 import com.crm.comcast.GenericUtils.JavaUtility;
 import com.crm.comcast.GenericUtils.PropertyFileUtility;
+import com.crm.comcast.GenericUtils.WebDriverUtility;
 
 
 
@@ -25,6 +26,7 @@ public class CreateOrganizationWithIndustry {
 		WebDriver driver;
 		PropertyFileUtility pLib = new PropertyFileUtility();
 		JavaUtility jLib = new JavaUtility();
+		WebDriverUtility wLib = new WebDriverUtility();
 		
 		int random = jLib.getRandomNumber();
 		String URL = pLib.readDataFromPropertyFile("url");
@@ -42,9 +44,14 @@ public class CreateOrganizationWithIndustry {
 	    }
 	    
 	    //navigate to the url
-	    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+	    wLib.waitForPageToLoad(driver);
 	    driver.get(URL);
-	    driver.manage().window().maximize();
+	    wLib.maximiseWin(driver);
+	    
+	  //login to the application
+	    driver.findElement(By.name("user_name")).sendKeys(USERNAME);
+	    driver.findElement(By.name("user_password")).sendKeys(PASSWORD);
+	    driver.findElement(By.id("submitButton")).click();
 	    
 		//Navigate to organizations
 		driver.findElement(By.linkText("Organizations")).click();
@@ -54,8 +61,9 @@ public class CreateOrganizationWithIndustry {
 		driver.findElement(By.name("accountname")).sendKeys("SkillRary_"+random);
 
 		//Select finance from industry drop-down
-		Select sel = new Select(driver.findElement(By.name("industry")));
-		sel.selectByVisibleText("Finance");
+
+		WebElement element = driver.findElement(By.name("industry"));
+		wLib.select(element, "Finance");
 				
 		//save
 		driver.findElement(By.xpath("//input[@title='Save [Alt+S]']")).click();
