@@ -1,5 +1,6 @@
 package com.crm.comcast.GenericUtils;
 
+import java.util.Date;
 import java.util.Random;
 
 import org.testng.annotations.Test;
@@ -9,7 +10,9 @@ import org.testng.annotations.Test;
  *
  */
 public class JavaUtility {
+
 	
+	Date dateobj = new  Date();
 	/**
 	 * This method will return a random number
 	 * @author Chaitra
@@ -21,5 +24,23 @@ public class JavaUtility {
 		int ran = random.nextInt(1000);
 		return ran;
 	}
+
+	public String getCurrentDate() 
+	{
+		String todaysdate= dateobj.toString();
+		return todaysdate;
+	}
+
+	public String getCurrentYear() 
+	{
+		String todaysdate= dateobj.toString();
+		String[] arr = todaysdate.split(" ");
+		return arr[5];
+
+	}
+
+
+
+
 
 }
