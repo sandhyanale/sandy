@@ -5,26 +5,42 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class OrganisationPage {
+import com.crm.comcast.GenericUtils.WebDriverUtility;
+
+public class OrganisationPage extends WebDriverUtility{
 	
+	WebDriver driver;
+
 	public OrganisationPage(WebDriver driver)
 	{
+		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(xpath="//img[@title='Create Organization...']")
-	private WebElement createOrganisationIMG;
+	@FindBy(xpath = "//img[@title = 'Create Organization...']")
+	private WebElement createOrgImage;
+	
+	@FindBy(name = "search_text")
+	private WebElement searchText;
+	
+	@FindBy(name = "submit")
+	private WebElement submitSearch;
 
-	/**
-	 * @return the createOrganisationIMG
-	 */
-	public WebElement getCreateOrganisationIMG() {
-		return createOrganisationIMG;
+	public WebElement getCreateOrgImage() {
+		return createOrgImage;
+	}
+
+	public WebElement getSearchText() {
+		return searchText;
+	}
+
+	public WebElement getSubmitSearch() {
+		return submitSearch;
 	}
 	
-	public void clickOnCreateOrgImg()
-	{
-		createOrganisationIMG.click();
-	}
+ public void createOrg()
+ {
+	 createOrgImage.click();
+ }
 
 }

@@ -23,6 +23,24 @@ public class HomePage extends WebDriverUtility{
 	
 	@FindBy(xpath="//a[text()='Sign Out']")
 	private WebElement signOutLink;
+	
+	 @FindBy(linkText = "Contacts")
+	  private WebElement contactsLnk;
+	  
+	  @FindBy(linkText = "Opportunities")
+	  private WebElement opportunitiesLnk;
+	  
+	  @FindBy(linkText = "Products")
+	  private WebElement productsLnk;
+	  
+	  @FindBy(linkText = "Leads")
+	  private WebElement leadsLnk;
+	  
+	  @FindBy(linkText = "More")
+	  private WebElement moreLnk;
+	  
+	  @FindBy(linkText = "Purchase Order")
+	  private WebElement purchaseOrderLnk;
 
 	/**
 	 * @return the organisationLink
@@ -45,11 +63,47 @@ public class HomePage extends WebDriverUtility{
 		return signOutLink;
 	}
 	
+	public WebElement getContactsLnk() {
+		return contactsLnk;
+	}
+
+	public WebElement getOpportunitiesLnk() {
+		return opportunitiesLnk;
+	}
+
+	public WebElement getProductsLnk() {
+		return productsLnk;
+	}
+
+	public WebElement getLeadsLnk() {
+		return leadsLnk;
+	}
+
+	public WebElement getmoreLnk() {
+		return moreLnk;
+	}
+
+	public WebElement getpurchaseOrderLnk()
+	{
+		return purchaseOrderLnk;
+	}
+	
 	/**
 	 * This method is used to click on Organisation Link
 	 */
 	public void clickOnOrganisationLink() {
 		organisationLink.click();
+	}
+	
+	public void navigateContacts()
+	{
+		contactsLnk.click();
+	}
+
+	public void navigateMore()
+	{
+		moreLnk.click();
+		mouseOver(driver, moreLnk);
 	}
 	
 	public void signOut() {

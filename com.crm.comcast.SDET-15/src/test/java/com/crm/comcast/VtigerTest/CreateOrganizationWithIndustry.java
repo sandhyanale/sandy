@@ -41,7 +41,7 @@ public class CreateOrganizationWithIndustry extends BaseClass {
 
 		//create organization
 	    OrganisationPage orgPage=new OrganisationPage(driver);
-	    orgPage.clickOnCreateOrgImg();
+	    orgPage.createOrg();
 	    
 	    //enter mandatory fields and create organization
 	    CreateOrganisationPage createOrgPage=new CreateOrganisationPage(driver);

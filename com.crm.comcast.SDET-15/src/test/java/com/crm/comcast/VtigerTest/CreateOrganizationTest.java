@@ -37,7 +37,7 @@ public class CreateOrganizationTest extends BaseClass{
 	    
 	    //navigate to create organization
 	    OrganisationPage orgPage=new OrganisationPage(driver);
-	    orgPage.clickOnCreateOrgImg();
+	    orgPage.createOrg();
 	    Reporter.log("Navigate to create Organisation", true);
 	    
 	    //enter mandatory fields and create organization

@@ -16,31 +16,23 @@ import com.crm.comcast.GenericUtils.ExcelUtility;
 import com.crm.comcast.GenericUtils.JavaUtility;
 import com.crm.comcast.GenericUtils.PropertyFileUtility;
 import com.crm.comcast.GenericUtils.WebDriverUtility;
+import com.crm.comcast.objectRepository.CreateNewContactPage;
+import com.crm.comcast.objectRepository.HomePage;
 
 public class CreateConatctWithOrganization extends BaseClass {
 	
 	@Test
 	public void createContactWithOrgTest() throws Throwable
 	{
+		
 		//fetch the data
 		String OrgName = eLib.getExcelData("sheet1", "TC_01", "OrgName")+jLib.getRandomNumber();
 		String ContactLastName = eLib.getExcelData("sheet2", "Tc_01", "ContactName");
-	
-	    //navigate to organization 
-        driver.findElement(By.linkText("Organizations")).click();
-	    
-	    //navigate to create organization
-	    driver.findElement(By.xpath("//img[@title='Create Organization...']")).click();
-	    
-	    //enter mandatory fields and create organization
-	    driver.findElement(By.name("accountname")).sendKeys(OrgName);
-	    driver.findElement(By.xpath("//input[@title='Save [Alt+S]']")).click();
+	 
 	    
 	    
-	    //navigate to contacts
-	    driver.findElement(By.linkText("Contacts")).click();
-	    
-		//Create Contact with organization
+		
+		 //Create Contact with organization
 	    wLib.waitForPageToLoad(driver);
 		driver.findElement(By.xpath("//img[@title='Create Contact...']")).click();
 		driver.findElement(By.name("lastname")).sendKeys(ContactLastName);
@@ -57,6 +49,7 @@ public class CreateConatctWithOrganization extends BaseClass {
 		
 		//save
 		driver.findElement(By.xpath("//input[@title='Save [Alt+S]']")).click();
+		
 	}
 
 }
