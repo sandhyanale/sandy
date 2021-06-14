@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.crm.comcast.Practice.DynamicWebtable">
+      <class name="com.crm.comcast.Practice.DemoTest">
         <methods>
-          <include name="handlingDynamicWebTable"/>
+          <include name="demoTest"/>
         </methods>
-      </class> <!-- com.crm.comcast.Practice.DynamicWebtable -->
+      </class> <!-- com.crm.comcast.Practice.DemoTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

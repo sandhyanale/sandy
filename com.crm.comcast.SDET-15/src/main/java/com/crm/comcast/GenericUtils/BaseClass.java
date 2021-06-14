@@ -16,6 +16,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
+import com.crm.comcast.objectRepository.HomePage;
+import com.crm.comcast.objectRepository.LoginPage;
+
 public class BaseClass {
 	
 	public DatabaseUtility dLib = new DatabaseUtility();
@@ -26,6 +29,7 @@ public class BaseClass {
 	public XMLFileUtility xLib =  new XMLFileUtility();
 	public PropertyFileUtility pLib = new PropertyFileUtility();
 	public WebDriver driver;
+	public HomePage homePage;
 	
 	@BeforeSuite(groups = {"SmokeTest","regressionTest"})
 	public void makeDBConnection() throws Throwable
@@ -63,20 +67,15 @@ public class BaseClass {
 		driver.get(URL);
 		wLib.maximiseWin(driver);
 		
-		driver.findElement(By.name("user_name")).sendKeys(USERNAME);
-	    driver.findElement(By.name("user_password")).sendKeys(PASSWORD);
-	    driver.findElement(By.id("submitButton")).click();
+		LoginPage loginPage=new LoginPage(driver);
+		loginPage.login(USERNAME, PASSWORD);
 	}
 	
 	
     @AfterMethod(groups = {"SmokeTest","regressionTest"})
     public void logoutOfApp()
     {
-    	WebElement logoutImg = driver.findElement(By.xpath("//img[@src='themes/softed/images/user.PNG']"));
-        wLib.mouseOver(driver, logoutImg);
-        wLib.waitForPageToLoad(driver);
-        wLib.waitForElementToBeVisible(driver, logoutImg);
-        driver.findElement(By.linkText("Sign Out")).click();
+    	homePage.signOut();
     }
     
     @AfterClass(groups = {"SmokeTest" , "regressionTest"})
