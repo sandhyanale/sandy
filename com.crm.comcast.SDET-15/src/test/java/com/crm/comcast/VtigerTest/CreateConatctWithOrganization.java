@@ -1,24 +1,14 @@
 package com.crm.comcast.VtigerTest;
 
-import java.util.Iterator;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
+import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.testng.SkipException;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.crm.comcast.GenericUtils.BaseClass;
-import com.crm.comcast.GenericUtils.ExcelUtility;
-import com.crm.comcast.GenericUtils.JavaUtility;
-import com.crm.comcast.GenericUtils.PropertyFileUtility;
-import com.crm.comcast.GenericUtils.WebDriverUtility;
-import com.crm.comcast.objectRepository.CreateNewContactPage;
-import com.crm.comcast.objectRepository.HomePage;
 
+@Listeners(com.crm.comcast.GenericUtils.ListnerImpl.class)
 public class CreateConatctWithOrganization extends BaseClass {
 	
 	@Test
@@ -49,7 +39,12 @@ public class CreateConatctWithOrganization extends BaseClass {
 		
 		//save
 		driver.findElement(By.xpath("//input[@title='Save [Alt+S]']")).click();
+		Assert.assertTrue(false);
 		
+	}
+	@Test
+	public void skipTest() {
+		throw new SkipException("This method will be skipped in excution");
 	}
 
 }

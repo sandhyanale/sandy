@@ -29,6 +29,7 @@ public class BaseClass {
 	public XMLFileUtility xLib =  new XMLFileUtility();
 	public PropertyFileUtility pLib = new PropertyFileUtility();
 	public WebDriver driver;
+	public static WebDriver staticDriver;
 	public HomePage homePage;
 	
 	@BeforeSuite(groups = {"SmokeTest","regressionTest"})
@@ -52,6 +53,7 @@ public class BaseClass {
 		}else {
 			driver = new InternetExplorerDriver();
 		}
+		staticDriver=driver;
 		
 	}
 	

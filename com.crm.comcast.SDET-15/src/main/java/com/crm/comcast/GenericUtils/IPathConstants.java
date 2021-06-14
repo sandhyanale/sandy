@@ -12,4 +12,5 @@ public interface IPathConstants {
 	String XMLPATH = "./Data/commonData.xml";
 	String PROPERTYFILEPATH = "./Data/commonData.properties";
 
+	String EXTENT_REPORT=System.getProperty("user.dir")+"/reports/ExtentReport";
 }

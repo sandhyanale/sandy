@@ -27,7 +27,7 @@ public class JavaUtility {
 
 	public String getCurrentDate() 
 	{
-		String todaysdate= dateobj.toString();
+		String todaysdate= dateobj.toString().replaceAll(" ", "_").replace(":", "_");
 		return todaysdate;
 	}
 
