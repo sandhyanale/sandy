@@ -3,11 +3,7 @@
 <suite name="Suite">
   <test thread-count="5" name="Test">
     <classes>
-      <class name="com.crm.comcast.VtigerTest.CreateOrganizationTest"/>
-      
-      
-      
-    <!--    <class name="com.crm.comcast.VtigerTest.CreateOrganizationWithIndustry"/>-->
+      <class name="com.crm.comcast.Practice.ReadDataFromCommandLine"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
