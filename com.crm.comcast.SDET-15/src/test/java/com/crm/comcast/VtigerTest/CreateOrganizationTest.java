@@ -1,66 +1,52 @@
 package com.crm.comcast.VtigerTest;
 
-import java.util.concurrent.TimeUnit;
-
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.testng.Reporter;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import com.crm.comcast.GenericUtils.JavaUtility;
-import com.crm.comcast.GenericUtils.PropertyFileUtility;
+import com.crm.comcast.GenericUtils.BaseClass;
+import com.crm.comcast.objectRepository.CreateOrganisationPage;
+import com.crm.comcast.objectRepository.HomePage;
+import com.crm.comcast.objectRepository.OrganisationInformationPage;
+import com.crm.comcast.objectRepository.OrganisationPage;
 
-public class CreateOrganizationTest {
+@Listeners(com.crm.comcast.GenericUtils.ListnerImpl.class)
+public class CreateOrganizationTest extends BaseClass{
 	
-	@Test
+	@Test(groups = "SmokeTest")
 	public void createOrgTest() throws Throwable
 	{
-		WebDriver driver;
-		PropertyFileUtility pLib = new PropertyFileUtility();
-		JavaUtility jLib = new JavaUtility();
+		//fetch the data
+		String OrgName = eLib.getExcelData("sheet1","TC_01","OrgName")+jLib.getRandomNumber();
 		
-		int random = jLib.getRandomNumber();
-		String URL = pLib.readDataFromPropertyFile("url");
-	    String USERNAME = pLib.readDataFromPropertyFile("username");
-	    String PASSWORD = pLib.readDataFromPropertyFile("password");
-	    String BROWSER = pLib.readDataFromPropertyFile("browser");
-	    
-	    //launch browser
-	    if(BROWSER.equals("chrome")){
-	    	driver = new ChromeDriver();
-	    }else if(BROWSER.equals("firefox")){
-	    	driver = new FirefoxDriver();
-	    }else {
-	    	driver = new InternetExplorerDriver();
-	    }
-	    
-	    //navigate to the url
-	    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-	    driver.get(URL);
-	    driver.manage().window().maximize();
-	    
-	    //login to the application
-	    driver.findElement(By.name("user_name")).sendKeys(USERNAME);
-	    driver.findElement(By.name("user_password")).sendKeys(PASSWORD);
-	    driver.findElement(By.id("submitButton")).click();
-	    
 	    //navigate to organizations
-	    driver.findElement(By.linkText("Organizations")).click();
+	    homePage=new HomePage(driver);
+	    homePage.clickOnOrganisationLink();
+	    Reporter.log("Navigate to Organisation", true);
 	    
 	    //navigate to create organization
-	    driver.findElement(By.xpath("//img[@title='Create Organization...']")).click();
+	    OrganisationPage orgPage=new OrganisationPage(driver);
+	    orgPage.createOrg();
+	    Reporter.log("Navigate to create Organisation", true);
 	    
 	    //enter mandatory fields and create organization
-	    driver.findElement(By.name("accountname")).sendKeys("SkillRary_"+random);
-	    driver.findElement(By.xpath("//input[@title='Save [Alt+S]']")).click();
+	    CreateOrganisationPage createOrgPage=new CreateOrganisationPage(driver);
+	    createOrgPage.createOrganisation(OrgName);
+	    Reporter.log("Enter mandatory filed & create Organisation", true);
 	    
 	    //validate
-        String successMsg = driver.findElement(By.xpath("//span[@class='dvHeaderText']")).getText();
-        Assert.assertTrue(successMsg.contains("SkillRary"));
-        System.out.println(successMsg);
+        OrganisationInformationPage orgInfoPage=new OrganisationInformationPage(driver);
+        String actualOrgName=orgInfoPage.getOrganisationText();
+        Assert.assertTrue(actualOrgName.contains(OrgName));
+        Reporter.log("Assertion Succesful", true);
+        
+	}
+	
+	@Test
+	public void createOrgWithType()
+	{
+		System.out.println("organization created");
 	}
 
 }

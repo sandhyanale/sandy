@@ -1,64 +1,46 @@
 package com.crm.comcast.VtigerTest;
 
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import com.crm.comcast.GenericUtils.JavaUtility;
-import com.crm.comcast.GenericUtils.PropertyFileUtility;
+import com.crm.comcast.GenericUtils.BaseClass;
+import com.crm.comcast.objectRepository.CreateOrganisationPage;
+import com.crm.comcast.objectRepository.HomePage;
+import com.crm.comcast.objectRepository.OrganisationInformationPage;
+import com.crm.comcast.objectRepository.OrganisationPage;
 
 
-
-public class CreateOrganizationWithIndustry {
+@Listeners(com.crm.comcast.GenericUtils.ListnerImpl.class)
+public class CreateOrganizationWithIndustry extends BaseClass {
 	
-	@Test
+	@Test(groups = "regressionTest")
 	public void createOrgWithIndustry() throws Throwable
 	{
 		
-		WebDriver driver;
-		PropertyFileUtility pLib = new PropertyFileUtility();
-		JavaUtility jLib = new JavaUtility();
 		
-		int random = jLib.getRandomNumber();
-		String URL = pLib.readDataFromPropertyFile("url");
-	    String USERNAME = pLib.readDataFromPropertyFile("username");
-	    String PASSWORD = pLib.readDataFromPropertyFile("password");
-	    String BROWSER = pLib.readDataFromPropertyFile("browser");
-	    
-	    //launch browser
-	    if(BROWSER.equals("chrome")){
-	    	driver = new ChromeDriver();
-	    }else if(BROWSER.equals("firefox")){
-	    	driver = new FirefoxDriver();
-	    }else {
-	    	driver = new InternetExplorerDriver();
-	    }
-	    
-	    //navigate to the url
-	    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-	    driver.get(URL);
-	    driver.manage().window().maximize();
+		//Fetch the data
+		String OrgName = eLib.getExcelData("sheet1", 1,2)+jLib.getRandomNumber();
+		String IndustryType = eLib.getExcelData("sheet1",3,3);
 	    
 		//Navigate to organizations
-		driver.findElement(By.linkText("Organizations")).click();
+		homePage=new HomePage(driver);
+	    homePage.clickOnOrganisationLink();
 
 		//create organization
-		driver.findElement(By.xpath("//img[@title='Create Organization...']")).click();
-		driver.findElement(By.name("accountname")).sendKeys("SkillRary_"+random);
-
-		//Select finance from industry drop-down
-		Select sel = new Select(driver.findElement(By.name("industry")));
-		sel.selectByVisibleText("Finance");
-				
-		//save
-		driver.findElement(By.xpath("//input[@title='Save [Alt+S]']")).click();
+	    OrganisationPage orgPage=new OrganisationPage(driver);
+	    orgPage.createOrg();
+	    
+	    //enter mandatory fields and create organization
+	    CreateOrganisationPage createOrgPage=new CreateOrganisationPage(driver);
+	    createOrgPage.createOrganisationWithIndustry(OrgName, IndustryType);
+	    
+	    //validate
+        OrganisationInformationPage orgInfoPage=new OrganisationInformationPage(driver);
+        String actualOrgName=orgInfoPage.getOrganisationText();
+        Assert.assertTrue(actualOrgName.contains(OrgName));
+        String actualIndustryName=orgInfoPage.getIndusInfo();
+        Assert.assertEquals(actualIndustryName, IndustryType);
 	}
 
 }
