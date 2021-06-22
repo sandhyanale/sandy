@@ -1,12 +1,8 @@
 package com.crm.comcast.GenericUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
-
 import org.json.simple.parser.JSONParser;
-import org.testng.annotations.Test;
 
 /**
  * This class reads the data from JSON file

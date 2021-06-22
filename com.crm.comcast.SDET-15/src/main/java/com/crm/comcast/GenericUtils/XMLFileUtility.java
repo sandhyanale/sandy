@@ -5,7 +5,6 @@ import java.io.File;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
-import org.testng.annotations.Test;
 /**
  * This class has methods to read data from xml file
  * @author Chaitra

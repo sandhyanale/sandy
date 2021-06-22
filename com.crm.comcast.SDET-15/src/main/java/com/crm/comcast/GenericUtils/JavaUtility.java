@@ -2,8 +2,6 @@ package com.crm.comcast.GenericUtils;
 
 import java.util.Date;
 import java.util.Random;
-
-import org.testng.annotations.Test;
 /**
  * This class has all java related generic methods like getRandomNumber
  * @author Chaitra

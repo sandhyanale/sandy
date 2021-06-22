@@ -2,9 +2,7 @@ package com.crm.comcast.GenericUtils;
 
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Properties;
-import org.testng.annotations.Test;
 /**
  * This class will read the data from property file
  * @author Chaitra
@@ -26,8 +24,7 @@ public class PropertyFileUtility {
 		Properties prop = new Properties();
 		prop.load(file);
 		String value=prop.getProperty(key);
-		return value;
-			
+		return value;	
 	}
 
 }
