@@ -49,15 +49,6 @@ public class MMT_CURRENT_DATE {
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//div[contains(text(),'GOI')]")).click();	
 
-		dest.sendKeys("KOLKATA");
-		Thread.sleep(2000);
-		driver.findElement(By.xpath("//div[contains(text(),'CCU')]")).click();
-
-		driver.findElement(By.xpath("//span[text()='DEPARTURE']")).click();
-
-		Thread.sleep(2000);
-
-		driver.findElement(By.xpath("//div[@aria-label='"+currentDate+"']")).click();
 
 	}
 
